@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "name": "MC24 Laghouat",
+    "slug": "mc24-laghouat",
+    "version": "1.0.0",
+    "orientation": "landscape",
+    "android": {
+      "package": "com.mc24laghouat.game"
+    }
+  }
+}
