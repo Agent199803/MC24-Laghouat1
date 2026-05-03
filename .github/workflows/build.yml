@@ -1,4 +1,4 @@
-name: Build MC24 Laghouat APK
+name: Build MC24 Laghouat APK (EAS)
 
 on:
   push:
@@ -18,23 +18,17 @@ jobs:
         with:
           node-version: 20
 
-      - name: Setup Java
-        uses: actions/setup-java@v4
-        with:
-          distribution: temurin
-          java-version: 17
-
       - name: Install dependencies
         run: npm install
 
-      - name: Generate Android project
-        run: npx expo prebuild --platform android --non-interactive
+      - name: Install Expo CLI
+        run: npm install -g expo-cli eas-cli
+
+      - name: Login to Expo
+        run: eas login --token ${{ secrets.EXPO_TOKEN }}
+
+      - name: Configure EAS
+        run: npx eas build:configure
 
       - name: Build APK
-        run: cd android && ./gradlew assembleDebug
-
-      - name: Upload APK
-        uses: actions/upload-artifact@v4
-        with:
-          name: MC24-Laghouat-APK
-          path: android/app/build/outputs/apk/debug/app-debug.apk
+        run: npx eas build --platform android --profile preview --non-interactive
